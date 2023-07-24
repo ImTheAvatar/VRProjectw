@@ -9,12 +9,17 @@ public class PlayerNetwork : NetworkBehaviour
 {
     [SerializeField] float walkSpeed = 10f;
     [SerializeField] Vector2 moveInput;
+    InputManager inputManager;
     public override void OnNetworkSpawn()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         if (IsOwner)
-            CameraFollow.Instance.ChangeFollowObject(this);
+        {
+            inputManager = GetComponent<InputManager>();
+            CameraFollow.Instance.ChangeFollowObject(gameObject);
+            inputManager.canInteract = true;
+        }
     }
     private void Update()
     {
