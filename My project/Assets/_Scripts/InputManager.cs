@@ -1,42 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    public bool canInteract;
-    [SerializeField] Transform HandPos;
-    bool HandFull=>grabbed!=null;
-    [SerializeField]GrabableObjBehaviour grabbed;
+    [SerializeField] PlayerNetwork player;
+    private void Awake()
+    {
+        PlayerNetwork.onLocalPlayerSpawned += OnLocalPlayerSpawn;
+    }
+
+    private void OnLocalPlayerSpawn(PlayerNetwork network)
+    {
+        player=network;
+    }
+
     public void Update()
     {
-        if (!canInteract) return;
+        if (player == null) return;
         if (Input.GetKeyDown(KeyCode.F))
         {
-            Debug.Log("F key pressed "+HandFull+" "+grabbed);
-            if (HandFull)
-            {
-                Debug.Log("hand full");
-                grabbed.attached = null;
-                grabbed = null;
-            }
-            else
-            {
-                Debug.Log("hand not full");
-                if (Physics.Raycast
-                    (Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit HitInfo, 5f))
-                {
-                    Debug.Log("RayCast hit " + HitInfo.collider.gameObject.name);
-                    var go = HitInfo.collider.gameObject;
-                    if (go.CompareTag("Grab"))
-                    {
-                        Debug.Log("Grabing");
-                        var grabObj = go.GetComponent<GrabableObjBehaviour>();
-                        grabObj.attached = HandPos;
-                        grabbed= grabObj;
-                    }
-                }
-            }
+            player.AttachObjectServerRpc(Camera.main.transform.position,Camera.main.transform.forward);
         }
+    }
+    private void OnDestroy()
+    {
+
+        PlayerNetwork.onLocalPlayerSpawned -= OnLocalPlayerSpawn;
     }
 }

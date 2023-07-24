@@ -130,7 +130,6 @@ GameObject:
   - component: {fileID: 3853236711273671973}
   - component: {fileID: 3006205879915875051}
   - component: {fileID: 8395513503437152082}
-  - component: {fileID: 2087207033}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -169,7 +168,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 52
   m_CollisionDetection: 0
 --- !u!65 &1695758144137747574
 BoxCollider:
@@ -213,14 +212,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SyncPositionX: 1
-  SyncPositionY: 1
+  SyncPositionY: 0
   SyncPositionZ: 1
-  SyncRotAngleX: 1
-  SyncRotAngleY: 1
-  SyncRotAngleZ: 1
-  SyncScaleX: 1
-  SyncScaleY: 1
-  SyncScaleZ: 1
+  SyncRotAngleX: 0
+  SyncRotAngleY: 0
+  SyncRotAngleZ: 0
+  SyncScaleX: 0
+  SyncScaleY: 0
+  SyncScaleZ: 0
   PositionThreshold: 0.001
   RotAngleThreshold: 0.01
   ScaleThreshold: 0.01
@@ -252,6 +251,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 10
   moveInput: {x: 0, y: 0}
+  HandPos: {fileID: 5354835969154294230}
+  grabbed: {fileID: 0}
 --- !u!114 &8395513503437152082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,20 +283,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &2087207033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8249913330606997658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b595971fec7cecb4b9d2f4388e005500, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canInteract: 0
-  HandPos: {fileID: 5354835969154294230}
 --- !u!1 &8249913331069144007
 GameObject:
   m_ObjectHideFlags: 0

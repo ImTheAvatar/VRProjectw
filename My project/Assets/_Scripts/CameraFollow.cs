@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,16 @@ public class CameraFollow : Singleton<CameraFollow>
     [SerializeField] Transform playerBody;
     float xRotation = 0f;
     public float mouseSensitivity = 100f;
+    private void Awake()
+    {
+        PlayerNetwork.onLocalPlayerSpawned += OnLocalPlayerSpawned;
+    }
+
+    private void OnLocalPlayerSpawned(PlayerNetwork network)
+    {
+        ChangeFollowObject(network.gameObject);
+    }
+
     public void ChangeFollowObject(GameObject go)
     {
         transform.parent = go.transform;
@@ -28,4 +39,9 @@ public class CameraFollow : Singleton<CameraFollow>
             playerBody.Rotate(Vector3.up * mouseX);
         }
     }
+    private void OnDestroy()
+    {
+        PlayerNetwork.onLocalPlayerSpawned -= OnLocalPlayerSpawned;
+    }
+
 }

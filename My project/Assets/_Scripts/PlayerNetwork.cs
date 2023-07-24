@@ -9,16 +9,17 @@ public class PlayerNetwork : NetworkBehaviour
 {
     [SerializeField] float walkSpeed = 10f;
     [SerializeField] Vector2 moveInput;
-    InputManager inputManager;
+    public static System.Action<PlayerNetwork> onLocalPlayerSpawned;
+    public Transform HandPos;
+    bool HandFull => grabbed != null;
+    [SerializeField] GrabableObjBehaviour grabbed;
     public override void OnNetworkSpawn()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        if (IsOwner)
+        if (IsLocalPlayer)
         {
-            inputManager = GetComponent<InputManager>();
-            CameraFollow.Instance.ChangeFollowObject(gameObject);
-            inputManager.canInteract = true;
+            onLocalPlayerSpawned?.Invoke(this);
         }
     }
     private void Update()
@@ -34,5 +35,28 @@ public class PlayerNetwork : NetworkBehaviour
     public void OnMove(InputValue val)
     {
         moveInput = val.Get<Vector2>();
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void AttachObjectServerRpc(Vector3 viewPoint,Vector3 forward)
+    {
+        if (HandFull)
+        {
+            grabbed.attached = null;
+            grabbed = null;
+        }
+        else
+        {
+            if (Physics.Raycast
+                (viewPoint, forward, out RaycastHit HitInfo, 5f))
+            {
+                var go = HitInfo.collider.gameObject;
+                if (go.CompareTag("Grab"))
+                {
+                    var grabObj = go.GetComponent<GrabableObjBehaviour>();
+                    grabObj.attached = HandPos;
+                    grabbed = grabObj;
+                }
+            }
+        }
     }
 }

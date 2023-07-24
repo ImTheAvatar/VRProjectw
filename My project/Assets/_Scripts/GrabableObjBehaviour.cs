@@ -9,7 +9,6 @@ public class GrabableObjBehaviour : NetworkBehaviour
     private void Update()
     {
         if (attached == null) return;
-        Debug.Log("moving with attached " + attached.position);
         transform.position = attached.position;
     }
 }
