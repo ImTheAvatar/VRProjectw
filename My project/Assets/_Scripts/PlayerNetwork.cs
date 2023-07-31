@@ -11,8 +11,8 @@ public class PlayerNetwork : NetworkBehaviour
     [SerializeField] Vector2 moveInput;
     public static System.Action<PlayerNetwork> onLocalPlayerSpawned;
     public Transform HandPos;
-    bool HandFull => grabbed != null;
-    [SerializeField] GrabableObjBehaviour grabbed;
+    public bool HandFull => grabbed != null;
+    public GrabableObjBehaviour grabbed;
     public override void OnNetworkSpawn()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -21,6 +21,7 @@ public class PlayerNetwork : NetworkBehaviour
         {
             onLocalPlayerSpawned?.Invoke(this);
         }
+        gameObject.name = OwnerClientId.ToString();
     }
     private void Update()
     {
@@ -30,7 +31,7 @@ public class PlayerNetwork : NetworkBehaviour
     void Run()
     {
         if (moveInput.x == 0 && moveInput.y == 0) return;
-        transform.position += (transform.forward * moveInput.y + transform.right * moveInput.x) * walkSpeed * Time.deltaTime;
+        transform.position += Time.deltaTime * walkSpeed * (transform.forward * moveInput.y + transform.right * moveInput.x);
     }
     public void OnMove(InputValue val)
     {
@@ -41,22 +42,35 @@ public class PlayerNetwork : NetworkBehaviour
     {
         if (HandFull)
         {
+            grabbed.TurnOnRB();
             grabbed.attached = null;
             grabbed = null;
         }
         else
         {
+            Debug.Log("trying to grab");
             if (Physics.Raycast
                 (viewPoint, forward, out RaycastHit HitInfo, 5f))
             {
+                Debug.Log("found something");
                 var go = HitInfo.collider.gameObject;
+                Debug.Log(go.name);
                 if (go.CompareTag("Grab"))
                 {
+                    Debug.Log("grabbed");
                     var grabObj = go.GetComponent<GrabableObjBehaviour>();
                     grabObj.attached = HandPos;
                     grabbed = grabObj;
+                    grabbed.TurnOffRB();
                 }
             }
         }
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void ChangeGrabOffsetServerRpc(Vector3 v)
+    {
+        if(grabbed == null) { Debug.Log("cant ");return; }
+        Debug.Log(grabbed.name + " changing height "+v);
+        grabbed.offset += v;
     }
 }

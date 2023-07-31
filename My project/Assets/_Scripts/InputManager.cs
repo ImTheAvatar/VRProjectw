@@ -24,6 +24,16 @@ public class InputManager : MonoBehaviour
         {
             player.AttachObjectServerRpc(Camera.main.transform.position,Camera.main.transform.forward);
         }
+        if (Input.GetKey(KeyCode.E))
+        {
+            //TO ASK : CHECK PLAYER HANDFULL
+                player.ChangeGrabOffsetServerRpc(new Vector3(0, 2f * Time.deltaTime, 0));
+        }
+        if (Input.GetKey(KeyCode.Q))
+        {
+                Debug.Log("key Q pressed");
+                player.ChangeGrabOffsetServerRpc(new Vector3(0, -2f * Time.deltaTime, 0));
+        }
     }
     private void OnDestroy()
     {
