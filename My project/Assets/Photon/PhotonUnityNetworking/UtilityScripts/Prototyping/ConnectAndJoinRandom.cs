@@ -27,7 +27,7 @@ namespace Photon.Pun.UtilityScripts
     public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     {
         /// <summary>Connect automatically? If false you can set this to true later on or call ConnectUsingSettings in your own scripts.</summary>
-        public bool AutoConnect = true;
+        public bool AutoConnect = false;
 
         /// <summary>Used as PhotonNetwork.GameVersion.</summary>
         public byte Version = 1;

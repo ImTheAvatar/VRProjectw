@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Voice.Unity;
 using Unity.Netcode;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
     [SerializeField] PlayerNetwork player;
+    [SerializeField] Recorder recorder;
     private void Awake()
     {
         PlayerNetwork.onLocalPlayerSpawned += OnLocalPlayerSpawn;
@@ -33,6 +35,9 @@ public class InputManager : MonoBehaviour
         {
                 Debug.Log("key Q pressed");
                 player.ChangeGrabOffsetServerRpc(new Vector3(0, -2f * Time.deltaTime, 0));
+        }
+        if(Input.GetKey(KeyCode.M)){
+            recorder.TransmitEnabled=!recorder.TransmitEnabled;
         }
     }
     private void OnDestroy()
