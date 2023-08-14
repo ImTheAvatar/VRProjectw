@@ -14,6 +14,10 @@ public class ParentHandler : NetworkBehaviour
     }
     public void MakeParent(GrabableObjBehaviour g)
     {
+        if (grabbed==null)
+        {
+            grabbed= new List<GrabableObjBehaviour>();
+        }
         g.transform.parent = transform;
         grabbed.Add(g);
     }

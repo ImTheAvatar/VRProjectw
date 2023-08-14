@@ -27,6 +27,11 @@ public class InputManager : MonoBehaviour
             Debug.Log("F Clicked");
             player.AttachObjectServerRpc(Camera.main.transform.position,Camera.main.transform.forward);
         }
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            Debug.Log("V Clicked");
+            player.DettachObjectServerRpc(Camera.main.transform.position, Camera.main.transform.forward);
+        }
         if (Input.GetKey(KeyCode.E))
         {
             //TO ASK : CHECK PLAYER HANDFULL

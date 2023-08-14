@@ -65,6 +65,37 @@ public class PlayerNetwork : NetworkBehaviour
         }
     }
     [ServerRpc(RequireOwnership = false)]
+    public void DettachObjectServerRpc(Vector3 viewPoint, Vector3 forward)
+    {
+        if (!IsServer) return;
+        if (HandFull)
+        {
+            
+        }
+        else
+        {
+            Debug.Log("Detaching");
+            if (Physics.Raycast
+                (viewPoint, forward, out RaycastHit HitInfo, 5f))
+            {
+                var go = HitInfo.collider.gameObject;
+                Debug.Log(go.name);
+                if (go.CompareTag("Grab"))
+                {
+                    var grabObj = go.GetComponent<GrabableObjBehaviour>();
+                    var prevParent = go.transform.parent.GetComponent<ParentHandler>();
+                    prevParent.grabbed.Remove(grabObj);
+                    var grabParent = Instantiate(GameManager.Instance.Prefab);
+                    grabParent.GetComponent<NetworkObject>().Spawn();
+                    grabParent.MakeParent(grabObj);
+                    grabObj.transform.localPosition = Vector3.zero;
+                    grabParent.FollowObj = HandPos;
+                    grabbed = grabParent;
+                }
+            }
+        }
+    }
+    [ServerRpc(RequireOwnership = false)]
     public void ChangeGrabOffsetServerRpc(Vector3 v)
     {
         if(grabbed == null) { Debug.Log("cant ");return; }
