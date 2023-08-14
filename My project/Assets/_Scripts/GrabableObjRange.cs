@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class GrabableObjRange : MonoBehaviour
 {
-    public GameObject go;
+    public GrabableObjBehaviour go;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Grab"))
         {
-            go= other.gameObject;
+            go= other.gameObject.GetComponent<GrabableObjBehaviour>();
         }
     }
     private void OnTriggerExit(Collider other)

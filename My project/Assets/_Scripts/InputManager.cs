@@ -24,6 +24,7 @@ public class InputManager : MonoBehaviour
         if (player == null) return;
         if (Input.GetKeyDown(KeyCode.F))
         {
+            Debug.Log("F Clicked");
             player.AttachObjectServerRpc(Camera.main.transform.position,Camera.main.transform.forward);
         }
         if (Input.GetKey(KeyCode.E))

@@ -12,7 +12,7 @@ public class PlayerNetwork : NetworkBehaviour
     public static System.Action<PlayerNetwork> onLocalPlayerSpawned;
     public Transform HandPos;
     public bool HandFull => grabbed != null;
-    public GrabableObjBehaviour grabbed;
+    public ParentHandler grabbed;
     public override void OnNetworkSpawn()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -40,28 +40,26 @@ public class PlayerNetwork : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void AttachObjectServerRpc(Vector3 viewPoint,Vector3 forward)
     {
+        if (!IsServer) return;
         if (HandFull)
         {
-            grabbed.TurnOnRB();
-            grabbed.attached = null;
+            Debug.Log("Attaching");
+            grabbed.Attach();
             grabbed = null;
         }
         else
         {
-            Debug.Log("trying to grab");
+            Debug.Log("Grabing");
             if (Physics.Raycast
                 (viewPoint, forward, out RaycastHit HitInfo, 5f))
             {
-                Debug.Log("found something");
                 var go = HitInfo.collider.gameObject;
                 Debug.Log(go.name);
                 if (go.CompareTag("Grab"))
                 {
-                    Debug.Log("grabbed");
-                    var grabObj = go.GetComponent<GrabableObjBehaviour>();
-                    grabObj.attached = HandPos;
+                    var grabObj = go.transform.parent.GetComponent<ParentHandler>();
+                    grabObj.FollowObj = HandPos;
                     grabbed = grabObj;
-                    grabbed.TurnOffRB();
                 }
             }
         }
