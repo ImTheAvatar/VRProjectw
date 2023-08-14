@@ -27,7 +27,6 @@ public class ParentHandler : NetworkBehaviour
     public void Attach()
     {
         FollowObj = null;
-        Debug.Log("we have another " + grabbed.Count);
         for(int i=0;i<grabbed.Count;i++)
         {
             var other = grabbed[i].ObjInRange.go;
@@ -37,13 +36,16 @@ public class ParentHandler : NetworkBehaviour
                 if (otherParent != null)
                 {
                     var otherParentHandler=otherParent.GetComponent<ParentHandler>();
-                    foreach(var item in otherParentHandler.grabbed)
+                    if (otherParentHandler == this) continue;
+                    var number = otherParentHandler.grabbed.Count;
+                    for (int j=0;j<number;j++)
                     {
-                        MakeParent(item);
+                        MakeParent(otherParentHandler.grabbed[j]);
                     }
                     otherParentHandler.grabbed.Clear();
                 }
             }
         }
+        Debug.Log("we have another " + grabbed.Count);
     }
 }
