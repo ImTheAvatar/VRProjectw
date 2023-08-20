@@ -42,7 +42,12 @@ public class InputManager : MonoBehaviour
                 Debug.Log("key Q pressed");
                 player.ChangeGrabOffsetServerRpc(new Vector3(0, -2f * Time.deltaTime, 0));
         }
-        if(Input.GetKey(KeyCode.M)){
+        if (Input.GetKey(KeyCode.R))
+        {
+            Debug.Log("key R pressed");
+            player.ChangeGrabRotationServerRpc();
+        }
+        if (Input.GetKey(KeyCode.M)){
             recorder.TransmitEnabled=!recorder.TransmitEnabled;
         }
     }

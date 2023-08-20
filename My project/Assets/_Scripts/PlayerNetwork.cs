@@ -102,4 +102,10 @@ public class PlayerNetwork : NetworkBehaviour
         Debug.Log(grabbed.name + " changing height "+v);
         grabbed.offset += v;
     }
+    [ServerRpc(RequireOwnership = false)]
+    public void ChangeGrabRotationServerRpc()
+    {
+        if (grabbed == null) { Debug.Log("cant "); return; }
+        grabbed.transform.Rotate(0, 100 * Time.deltaTime, 0);
+    }
 }
