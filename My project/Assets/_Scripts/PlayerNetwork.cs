@@ -99,7 +99,6 @@ public class PlayerNetwork : NetworkBehaviour
     public void ChangeGrabOffsetServerRpc(Vector3 v)
     {
         if(grabbed == null) { Debug.Log("cant ");return; }
-        Debug.Log(grabbed.name + " changing height "+v);
         grabbed.offset += v;
     }
     [ServerRpc(RequireOwnership = false)]

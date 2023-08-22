@@ -276,7 +276,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b73a21fb0eef4c14bbb3cf24de5c0adb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attached: {fileID: 0}
-  offset: {x: 0, y: 0, z: 0}
-  parent: {fileID: 0}
   ObjInRange: {fileID: 3829418019319011340}

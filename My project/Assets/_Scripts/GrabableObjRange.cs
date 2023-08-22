@@ -10,6 +10,7 @@ public class GrabableObjRange : MonoBehaviour
         if (other.gameObject.CompareTag("Grab"))
         {
             go= other.gameObject.GetComponent<GrabableObjBehaviour>();
+            Debug.Log("these two are in collider " + go.name + " " + gameObject.name); ;
         }
     }
     private void OnTriggerExit(Collider other)
@@ -21,6 +22,7 @@ public class GrabableObjRange : MonoBehaviour
                 if (go == other.gameObject)
                 {
                     go = null;
+                    Debug.Log("these two are no longer in collider " + go.name + " " + gameObject.name);
                 }
             }
         }
