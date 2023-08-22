@@ -55,6 +55,10 @@ public class PlayerNetwork : NetworkBehaviour
             {
                 var go = HitInfo.collider.gameObject;
                 Debug.Log(go.name);
+                if (go.transform.parent.CompareTag("Grab"))
+                {
+                    go = go.transform.parent.gameObject;
+                }
                 if (go.CompareTag("Grab"))
                 {
                     var grabObj = go.transform.parent.GetComponent<ParentHandler>();
@@ -80,6 +84,10 @@ public class PlayerNetwork : NetworkBehaviour
             {
                 var go = HitInfo.collider.gameObject;
                 Debug.Log(go.name);
+                if (go.transform.parent.CompareTag("Grab"))
+                {
+                    go = go.transform.parent.gameObject;
+                }
                 if (go.CompareTag("Grab"))
                 {
                     var grabObj = go.GetComponent<GrabableObjBehaviour>();

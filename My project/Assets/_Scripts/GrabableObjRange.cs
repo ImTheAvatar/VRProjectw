@@ -19,10 +19,10 @@ public class GrabableObjRange : MonoBehaviour
         {
             if (go != null)
             {
-                if (go == other.gameObject)
+                if (go.gameObject == other.gameObject)
                 {
-                    go = null;
                     Debug.Log("these two are no longer in collider " + go.name + " " + gameObject.name);
+                    go = null;
                 }
             }
         }
