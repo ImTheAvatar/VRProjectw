@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Valve.VR;
+using Valve.VR.InteractionSystem;
 
 public class PlayerNetwork : NetworkBehaviour
 {
@@ -13,6 +16,18 @@ public class PlayerNetwork : NetworkBehaviour
     public Transform HandPos;
     public bool HandFull => grabbed != null;
     public ParentHandler grabbed;
+
+
+    public SteamVR_Action_Vector2 move;
+    public SteamVR_Action_Vector2 rotate;
+    public SteamVR_Action_Boolean grabTrigger;
+    public SteamVR_Action_Boolean disassembleTrigger;
+    public SteamVR_Action_Single moveOffsetUp;
+    public SteamVR_Action_Single moveOffsetDown;
+    public Hand RHand;
+    public Hand LHand;
+    public Transform player;
+
     public override void OnNetworkSpawn()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -20,12 +35,59 @@ public class PlayerNetwork : NetworkBehaviour
         if (IsLocalPlayer)
         {
             onLocalPlayerSpawned?.Invoke(this);
+            move.AddOnChangeListener(OnMoving, RHand.handType);
+            grabTrigger.AddOnChangeListener(OnGrabTrigger, LHand.handType);
+            disassembleTrigger.AddOnChangeListener(OnDisTrigger, LHand.handType);
+            moveOffsetUp.AddOnAxisListener(OnOffsetUp, RHand.handType);
+            moveOffsetDown.AddOnAxisListener(OnOffsetDown, RHand.handType);
         }
         gameObject.name = OwnerClientId.ToString();
+        Debug.Log("adding listener");
     }
+
+    private void OnOffsetDown(SteamVR_Action_Single fromAction, SteamVR_Input_Sources fromSource, float newAxis, float newDelta)
+    {
+        Debug.Log("offset down " + newAxis);
+        ChangeGrabOffsetServerRpc(new Vector3(0, -2f * Time.deltaTime, 0));
+    }
+
+    private void OnOffsetUp(SteamVR_Action_Single fromAction, SteamVR_Input_Sources fromSource, float newAxis, float newDelta)
+    {
+        Debug.Log("offset up "+newAxis);
+        ChangeGrabOffsetServerRpc(new Vector3(0, 2f * Time.deltaTime, 0));
+    }
+
+    private void OnDisTrigger(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource, bool newState)
+    {
+        if (newState)
+        {
+            Debug.Log("dis");
+            DettachObjectServerRpc(Camera.main.transform.position, Camera.main.transform.forward);
+        }
+    }
+
+    private void OnGrabTrigger(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource, bool newState)
+    {
+        if(newState)
+        {
+            Debug.Log("grab");
+            AttachObjectServerRpc(Camera.main.transform.position, Camera.main.transform.forward);
+        }
+    }
+
+    private void OnMoving(SteamVR_Action_Vector2 fromAction, SteamVR_Input_Sources fromSource, Vector2 axis, Vector2 delta)
+    {
+        Debug.Log(axis + " move " + delta);
+        player.transform.position += new Vector3(axis.x, 0, axis.y) * Time.deltaTime * 10;
+    }
+
     private void Update()
     {
         if (!IsOwner || !IsSpawned) return;
+        if (HandFull)
+        {
+            ChangeGrabRotationWithHandServerRpc();
+        }
         Run();
     }
     void Run()
@@ -110,9 +172,15 @@ public class PlayerNetwork : NetworkBehaviour
         grabbed.offset += v;
     }
     [ServerRpc(RequireOwnership = false)]
-    public void ChangeGrabRotationServerRpc()
+    public void ChangeGrabRotationServerRpc(Vector3 v)
     {
         if (grabbed == null) { Debug.Log("cant "); return; }
-        grabbed.transform.Rotate(0, 100 * Time.deltaTime, 0);
+        grabbed.transform.Rotate(v.x*Time.deltaTime, v.y * Time.deltaTime, v.z*Time.deltaTime);
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void ChangeGrabRotationWithHandServerRpc()
+    {
+        var eular = LHand.transform.rotation.eulerAngles;
+        grabbed.transform.rotation = Quaternion.Euler(eular.x + 60, eular.y - 45, eular.z);
     }
 }

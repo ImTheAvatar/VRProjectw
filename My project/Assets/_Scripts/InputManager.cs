@@ -45,7 +45,7 @@ public class InputManager : MonoBehaviour
         if (Input.GetKey(KeyCode.R))
         {
             //Debug.Log("key R pressed");
-            player.ChangeGrabRotationServerRpc();
+            player.ChangeGrabRotationServerRpc(new Vector3(0,100,0));
         }
         if (Input.GetKey(KeyCode.M)){
             recorder.TransmitEnabled=!recorder.TransmitEnabled;
