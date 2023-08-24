@@ -37,14 +37,17 @@ public class PlayerNetwork : NetworkBehaviour
         if (IsLocalPlayer)
         {
             onLocalPlayerSpawned?.Invoke(this);
-            move.AddOnChangeListener(OnMoving, RHand.handType);
-            grabTrigger.AddOnChangeListener(OnGrabTrigger, LHand.handType);
-            disassembleTrigger.AddOnChangeListener(OnDisTrigger, LHand.handType);
-            moveOffsetUp.AddOnAxisListener(OnOffsetUp, RHand.handType);
-            moveOffsetDown.AddOnAxisListener(OnOffsetDown, RHand.handType);
             if (!InputManager.Instance.IsVR)
             {
                 VR.gameObject.SetActive(false);
+            }
+            else
+            {
+                move.AddOnChangeListener(OnMoving, RHand.handType);
+                grabTrigger.AddOnChangeListener(OnGrabTrigger, LHand.handType);
+                disassembleTrigger.AddOnChangeListener(OnDisTrigger, LHand.handType);
+                moveOffsetUp.AddOnAxisListener(OnOffsetUp, RHand.handType);
+                moveOffsetDown.AddOnAxisListener(OnOffsetDown, RHand.handType);
             }
         }
         gameObject.name = OwnerClientId.ToString();
@@ -81,7 +84,7 @@ public class PlayerNetwork : NetworkBehaviour
 
     private void OnMoving(SteamVR_Action_Vector2 fromAction, SteamVR_Input_Sources fromSource, Vector2 axis, Vector2 delta)
     {
-        player.transform.position += new Vector3(axis.x, 0, axis.y) * Time.deltaTime * 10;
+        player.transform.position += new Vector3(axis.x, 0, axis.y) * Time.deltaTime*walkSpeed;
     }
 
     private void Update()

@@ -1777,7 +1777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a4f06cfdb72e9948bf67307c5f7b188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 10
+  walkSpeed: 25
   moveInput: {x: 0, y: 0}
   HandPos: {fileID: 5354835969154294230}
   grabbed: {fileID: 0}

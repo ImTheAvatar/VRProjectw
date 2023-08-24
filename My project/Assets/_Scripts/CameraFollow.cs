@@ -27,7 +27,7 @@ public class CameraFollow :MonoBehaviour
         body=go.gameObject.GetComponent<Rigidbody>();
         transform.parent = go.HeadPos;
         transform.localPosition = new Vector3(0, 0, 0);
-        playerBody = go.HeadPos;
+        playerBody = go.transform;
     }
     private void Update()
     {
