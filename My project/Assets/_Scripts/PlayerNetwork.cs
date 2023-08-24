@@ -93,11 +93,11 @@ public class PlayerNetwork : NetworkBehaviour
     bool isMoving = false;
     private void OnMoving(SteamVR_Action_Vector2 fromAction, SteamVR_Input_Sources fromSource, Vector2 axis, Vector2 delta)
     {
-        player.transform.position += new Vector3(axis.x, 0, axis.y) * Time.deltaTime*walkSpeed;
-        Debug.Log(delta);
+        Vector3 headForward = VRCamera.forward;
+        Vector3 movementDirection = (headForward * axis.y + VRCamera.right * axis.x).normalized;
+        movementDirection.y = 0f;
+        player.transform.position += movementDirection * Time.deltaTime*walkSpeed;
         isMoving = true;
-        m_Animator.SetBool("walk", true);
-        m_Animator.SetBool("wait", false);
     }
 
     private void Update()
@@ -115,12 +115,12 @@ public class PlayerNetwork : NetworkBehaviour
         {
             if (isMoving)
             {
-                AnimationChange(true);
+                AnimationChangeServerRpc(true);
                 isMoving = false;
             }
             else
             {
-                AnimationChange(false);
+                AnimationChangeServerRpc(false);
             }
             await Task.Delay(100);
         }
@@ -130,11 +130,11 @@ public class PlayerNetwork : NetworkBehaviour
         if (InputManager.Instance.IsVR)
             return;
         if (moveInput.x == 0 && moveInput.y == 0){
-            AnimationChange(false);
+            AnimationChangeServerRpc(false);
             return;
         }
         transform.position += Time.deltaTime * walkSpeed * (transform.forward * moveInput.y + transform.right * moveInput.x);
-        AnimationChange(true);
+        AnimationChangeServerRpc(true);
 
     }
     public void OnMove(InputValue val)
@@ -224,7 +224,7 @@ public class PlayerNetwork : NetworkBehaviour
         grabbed.offset += v;
     }
     [ServerRpc(RequireOwnership = false)]
-    public void AnimationChange(bool isMoving)
+    public void AnimationChangeServerRpc(bool isMoving)
     {
         if(isMoving)
         {
