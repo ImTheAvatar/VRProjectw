@@ -4932,6 +4932,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   recorder: {fileID: 200257479}
+  IsVR: 1
 --- !u!4 &1181434753
 Transform:
   m_ObjectHideFlags: 0

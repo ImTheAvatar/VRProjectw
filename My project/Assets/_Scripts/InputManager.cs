@@ -5,10 +5,11 @@ using Photon.Voice.Unity;
 using Unity.Netcode;
 using UnityEngine;
 
-public class InputManager : MonoBehaviour
+public class InputManager : Singleton<InputManager>
 {
     [SerializeField] PlayerNetwork player;
     [SerializeField] Recorder recorder;
+    public bool IsVR;
     private void Awake()
     {
         PlayerNetwork.onLocalPlayerSpawned += OnLocalPlayerSpawn;
@@ -39,12 +40,12 @@ public class InputManager : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Q))
         {
-                //Debug.Log("key Q pressed");
+                Debug.Log("key Q pressed");
                 player.ChangeGrabOffsetServerRpc(new Vector3(0, -2f * Time.deltaTime, 0));
         }
         if (Input.GetKey(KeyCode.R))
         {
-            //Debug.Log("key R pressed");
+            Debug.Log("key R pressed");
             player.ChangeGrabRotationServerRpc(new Vector3(0,100,0));
         }
         if (Input.GetKey(KeyCode.M)){

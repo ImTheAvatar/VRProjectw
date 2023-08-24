@@ -19,15 +19,15 @@ public class CameraFollow :MonoBehaviour
 
     private void OnLocalPlayerSpawned(PlayerNetwork network)
     {
-        ChangeFollowObject(network.gameObject);
+        ChangeFollowObject(network);
     }
 
-    public void ChangeFollowObject(GameObject go)
+    public void ChangeFollowObject(PlayerNetwork go)
     {
-        body=go.GetComponent<Rigidbody>();
-        transform.parent = go.transform;
+        body=go.gameObject.GetComponent<Rigidbody>();
+        transform.parent = go.HeadPos;
         transform.localPosition = new Vector3(0, 0, 0);
-        playerBody = go.transform;
+        playerBody = go.HeadPos;
     }
     private void Update()
     {

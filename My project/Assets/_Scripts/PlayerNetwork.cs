@@ -27,6 +27,8 @@ public class PlayerNetwork : NetworkBehaviour
     public Hand RHand;
     public Hand LHand;
     public Transform player;
+    public Transform VR;
+    public Transform HeadPos;
 
     public override void OnNetworkSpawn()
     {
@@ -40,6 +42,10 @@ public class PlayerNetwork : NetworkBehaviour
             disassembleTrigger.AddOnChangeListener(OnDisTrigger, LHand.handType);
             moveOffsetUp.AddOnAxisListener(OnOffsetUp, RHand.handType);
             moveOffsetDown.AddOnAxisListener(OnOffsetDown, RHand.handType);
+            if (!InputManager.Instance.IsVR)
+            {
+                VR.gameObject.SetActive(false);
+            }
         }
         gameObject.name = OwnerClientId.ToString();
         Debug.Log("adding listener");
@@ -47,13 +53,11 @@ public class PlayerNetwork : NetworkBehaviour
 
     private void OnOffsetDown(SteamVR_Action_Single fromAction, SteamVR_Input_Sources fromSource, float newAxis, float newDelta)
     {
-        Debug.Log("offset down " + newAxis);
         ChangeGrabOffsetServerRpc(new Vector3(0, -2f * Time.deltaTime, 0));
     }
 
     private void OnOffsetUp(SteamVR_Action_Single fromAction, SteamVR_Input_Sources fromSource, float newAxis, float newDelta)
     {
-        Debug.Log("offset up "+newAxis);
         ChangeGrabOffsetServerRpc(new Vector3(0, 2f * Time.deltaTime, 0));
     }
 
@@ -77,7 +81,6 @@ public class PlayerNetwork : NetworkBehaviour
 
     private void OnMoving(SteamVR_Action_Vector2 fromAction, SteamVR_Input_Sources fromSource, Vector2 axis, Vector2 delta)
     {
-        Debug.Log(axis + " move " + delta);
         player.transform.position += new Vector3(axis.x, 0, axis.y) * Time.deltaTime * 10;
     }
 
