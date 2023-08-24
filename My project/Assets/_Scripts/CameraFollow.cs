@@ -7,11 +7,12 @@ using static UnityEngine.GraphicsBuffer;
 
 public class CameraFollow :MonoBehaviour
 {
-    [SerializeField] float minViewDistance = 50f;
+    [SerializeField] float minViewDistance = 70f;
     [SerializeField] Transform playerBody;
     float xRotation = 0f;
     public float mouseSensitivity = 100f;
     Rigidbody body;
+    PlayerNetwork player;
     private void Awake()
     {
         PlayerNetwork.onLocalPlayerSpawned += OnLocalPlayerSpawned;
@@ -24,6 +25,7 @@ public class CameraFollow :MonoBehaviour
 
     public void ChangeFollowObject(PlayerNetwork go)
     {
+        player = go;
         body=go.gameObject.GetComponent<Rigidbody>();
         transform.parent = go.HeadPos;
         transform.localPosition = new Vector3(0, 0, 0);
@@ -32,6 +34,12 @@ public class CameraFollow :MonoBehaviour
     private void Update()
     {
         if (playerBody == null) return;
+        if (InputManager.Instance.IsVR)
+        {
+            transform.rotation=player.VRCamera.transform.rotation;
+            player.Shape.transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+            return;
+        }
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
         xRotation -= mouseY;

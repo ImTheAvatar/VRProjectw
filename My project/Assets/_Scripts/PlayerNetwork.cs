@@ -30,6 +30,8 @@ public class PlayerNetwork : NetworkBehaviour
     public Transform player;
     public Transform VR;
     public Transform HeadPos;
+    public Transform VRCamera;
+    public GameObject Shape;
     bool mBool=false;
     public override void OnNetworkSpawn()
     {
@@ -91,7 +93,7 @@ public class PlayerNetwork : NetworkBehaviour
     private void Update()
     {
         if (!IsOwner || !IsSpawned) return;
-        if (HandFull)
+        if (HandFull && InputManager.Instance.IsVR)
         {
             ChangeGrabRotationWithHandServerRpc();
         }
@@ -100,13 +102,11 @@ public class PlayerNetwork : NetworkBehaviour
     void Run()
     {
         if (moveInput.x == 0 && moveInput.y == 0){
-            Debug.Log("waiting");
             m_Animator.SetBool("wait",true);
             m_Animator.SetBool("walk", false);
             return;
         }
         transform.position += Time.deltaTime * walkSpeed * (transform.forward * moveInput.y + transform.right * moveInput.x);
-        Debug.Log("walking");
         m_Animator.SetBool("walk",true);
         m_Animator.SetBool("wait", false);
 
@@ -129,18 +129,28 @@ public class PlayerNetwork : NetworkBehaviour
         {
             Debug.Log("Grabing");
             if (Physics.Raycast
-                (viewPoint, forward, out RaycastHit HitInfo, 5f))
+                (viewPoint, forward, out RaycastHit HitInfo, 10f))
             {
                 var go = HitInfo.collider.gameObject;
                 Debug.Log(go.name);
-                if (go.transform.parent.CompareTag("Grab"))
+                if (go.transform.parent != null)
                 {
-                    go = go.transform.parent.gameObject;
+                    if (go.transform.parent.CompareTag("Grab"))
+                    {
+                        go = go.transform.parent.gameObject;
+                    }
                 }
                 if (go.CompareTag("Grab"))
                 {
                     var grabObj = go.transform.parent.GetComponent<ParentHandler>();
-                    grabObj.FollowObj = HandPos;
+                    if (InputManager.Instance.IsVR)
+                    {
+                        grabObj.FollowObj = LHand.transform;
+                    }
+                    else
+                    {
+                        grabObj.FollowObj = HandPos;
+                    }
                     grabbed = grabObj;
                 }
             }
