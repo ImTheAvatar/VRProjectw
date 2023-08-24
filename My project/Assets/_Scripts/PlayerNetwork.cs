@@ -30,10 +30,13 @@ public class PlayerNetwork : NetworkBehaviour
     public Transform VR;
     public Transform HeadPos;
 
+    Animator m_Animator;
+    bool mBool=false;
     public override void OnNetworkSpawn()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        m_Animator=gameObject.GetComponent<Animator>();
         if (IsLocalPlayer)
         {
             onLocalPlayerSpawned?.Invoke(this);
@@ -98,8 +101,13 @@ public class PlayerNetwork : NetworkBehaviour
     }
     void Run()
     {
-        if (moveInput.x == 0 && moveInput.y == 0) return;
+        if (moveInput.x == 0 && moveInput.y == 0){
+            m_Animator.SetTrigger("wait");
+            return;
+        }
         transform.position += Time.deltaTime * walkSpeed * (transform.forward * moveInput.y + transform.right * moveInput.x);
+        m_Animator.SetTrigger("walk");
+
     }
     public void OnMove(InputValue val)
     {
