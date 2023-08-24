@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
@@ -51,6 +52,7 @@ public class PlayerNetwork : NetworkBehaviour
                 disassembleTrigger.AddOnChangeListener(OnDisTrigger, LHand.handType);
                 moveOffsetUp.AddOnAxisListener(OnOffsetUp, RHand.handType);
                 moveOffsetDown.AddOnAxisListener(OnOffsetDown, RHand.handType);
+                MovingVR();
             }
         }
         else
@@ -88,11 +90,12 @@ public class PlayerNetwork : NetworkBehaviour
             AttachObjectServerRpc(Camera.main.transform.position, Camera.main.transform.forward);
         }
     }
-
+    bool isMoving = false;
     private void OnMoving(SteamVR_Action_Vector2 fromAction, SteamVR_Input_Sources fromSource, Vector2 axis, Vector2 delta)
     {
-        Debug.Log("here");
         player.transform.position += new Vector3(axis.x, 0, axis.y) * Time.deltaTime*walkSpeed;
+        Debug.Log(delta);
+        isMoving = true;
         m_Animator.SetBool("walk", true);
         m_Animator.SetBool("wait", false);
     }
@@ -105,6 +108,24 @@ public class PlayerNetwork : NetworkBehaviour
             ChangeGrabRotationWithHandServerRpc();
         }
         Run();
+    }
+    async void MovingVR()
+    {
+        while (true)
+        {
+            if (isMoving)
+            {
+                m_Animator.SetBool("walk", true);
+                m_Animator.SetBool("wait", false);
+                isMoving = false;
+            }
+            else
+            {
+                m_Animator.SetBool("walk", false);
+                m_Animator.SetBool("wait", true);
+            }
+            await Task.Delay(100);
+        }
     }
     void Run()
     {
