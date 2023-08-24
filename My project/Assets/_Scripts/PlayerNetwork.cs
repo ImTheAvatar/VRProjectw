@@ -115,14 +115,12 @@ public class PlayerNetwork : NetworkBehaviour
         {
             if (isMoving)
             {
-                m_Animator.SetBool("walk", true);
-                m_Animator.SetBool("wait", false);
+                AnimationChange(true);
                 isMoving = false;
             }
             else
             {
-                m_Animator.SetBool("walk", false);
-                m_Animator.SetBool("wait", true);
+                AnimationChange(false);
             }
             await Task.Delay(100);
         }
@@ -132,13 +130,11 @@ public class PlayerNetwork : NetworkBehaviour
         if (InputManager.Instance.IsVR)
             return;
         if (moveInput.x == 0 && moveInput.y == 0){
-            m_Animator.SetBool("wait",true);
-            m_Animator.SetBool("walk", false);
+            AnimationChange(false);
             return;
         }
         transform.position += Time.deltaTime * walkSpeed * (transform.forward * moveInput.y + transform.right * moveInput.x);
-        m_Animator.SetBool("walk",true);
-        m_Animator.SetBool("wait", false);
+        AnimationChange(true);
 
     }
     public void OnMove(InputValue val)
@@ -226,6 +222,22 @@ public class PlayerNetwork : NetworkBehaviour
     {
         if(grabbed == null) { Debug.Log("cant ");return; }
         grabbed.offset += v;
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void AnimationChange(bool isMoving)
+    {
+        if(isMoving)
+        {
+
+            m_Animator.SetBool("walk", true);
+            m_Animator.SetBool("wait", false);
+        }
+        else
+        {
+            m_Animator.SetBool("walk", false);
+            m_Animator.SetBool("wait", true);
+
+        }
     }
     [ServerRpc(RequireOwnership = false)]
     public void ChangeGrabRotationServerRpc(Vector3 v)
