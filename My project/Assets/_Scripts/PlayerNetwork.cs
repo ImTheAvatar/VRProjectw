@@ -53,6 +53,10 @@ public class PlayerNetwork : NetworkBehaviour
                 moveOffsetDown.AddOnAxisListener(OnOffsetDown, RHand.handType);
             }
         }
+        else
+        {
+            VR.gameObject.SetActive(false);
+        }
         gameObject.name = OwnerClientId.ToString();
         Debug.Log("adding listener");
     }
@@ -87,7 +91,10 @@ public class PlayerNetwork : NetworkBehaviour
 
     private void OnMoving(SteamVR_Action_Vector2 fromAction, SteamVR_Input_Sources fromSource, Vector2 axis, Vector2 delta)
     {
+        Debug.Log("here");
         player.transform.position += new Vector3(axis.x, 0, axis.y) * Time.deltaTime*walkSpeed;
+        m_Animator.SetBool("walk", true);
+        m_Animator.SetBool("wait", false);
     }
 
     private void Update()
@@ -101,6 +108,8 @@ public class PlayerNetwork : NetworkBehaviour
     }
     void Run()
     {
+        if (InputManager.Instance.IsVR)
+            return;
         if (moveInput.x == 0 && moveInput.y == 0){
             m_Animator.SetBool("wait",true);
             m_Animator.SetBool("walk", false);
