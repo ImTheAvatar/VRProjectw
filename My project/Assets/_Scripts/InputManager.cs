@@ -49,7 +49,13 @@ public class InputManager : Singleton<InputManager>
             player.ChangeGrabRotationServerRpc(new Vector3(0,100,0));
         }
         if (Input.GetKey(KeyCode.M)){
-            recorder.TransmitEnabled=!recorder.TransmitEnabled;
+            Debug.Log("muting "+ recorder.TransmitEnabled);
+            recorder.gameObject.SetActive(false);
+        }
+        if (Input.GetKey(KeyCode.N))
+        {
+            Debug.Log("muting " + recorder.TransmitEnabled);
+            recorder.gameObject.SetActive(true);
         }
     }
     private void OnDestroy()
