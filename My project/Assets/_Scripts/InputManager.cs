@@ -22,6 +22,16 @@ public class InputManager : Singleton<InputManager>
 
     public void Update()
     {
+        if (Input.GetKey(KeyCode.M))
+        {
+            Debug.Log("muting " + recorder.TransmitEnabled);
+            recorder.gameObject.SetActive(false);
+        }
+        if (Input.GetKey(KeyCode.N))
+        {
+            Debug.Log("muting " + recorder.TransmitEnabled);
+            recorder.gameObject.SetActive(true);
+        }
         if (player == null) return;
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -47,15 +57,6 @@ public class InputManager : Singleton<InputManager>
         {
             Debug.Log("key R pressed");
             player.ChangeGrabRotationServerRpc(new Vector3(0,100,0));
-        }
-        if (Input.GetKey(KeyCode.M)){
-            Debug.Log("muting "+ recorder.TransmitEnabled);
-            recorder.gameObject.SetActive(false);
-        }
-        if (Input.GetKey(KeyCode.N))
-        {
-            Debug.Log("muting " + recorder.TransmitEnabled);
-            recorder.gameObject.SetActive(true);
         }
     }
     private void OnDestroy()
