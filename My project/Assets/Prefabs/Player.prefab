@@ -1586,7 +1586,7 @@ Transform:
   m_GameObject: {fileID: 8249913330606997658}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0, z: 2}
-  m_LocalScale: {x: 15, y: 15, z: 15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8249913331069144008}
@@ -1638,8 +1638,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3814013198
+  GlobalObjectIdHash: 1541031241
   AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
 --- !u!114 &6874943143258073884
@@ -1666,8 +1670,12 @@ MonoBehaviour:
   PositionThreshold: 0.001
   RotAngleThreshold: 0.01
   ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
   InLocalSpace: 0
   Interpolate: 1
+  SlerpPosition: 0
 --- !u!114 &3853236711273671973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1692,7 +1700,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a4f06cfdb72e9948bf67307c5f7b188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 50
+  walkSpeed: 5
   moveInput: {x: 0, y: 0}
   m_Animator: {fileID: 1445920720754508415}
   HandPos: {fileID: 5354835969154294230}
