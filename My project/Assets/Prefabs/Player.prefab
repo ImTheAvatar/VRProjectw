@@ -1703,6 +1703,7 @@ MonoBehaviour:
   walkSpeed: 5
   moveInput: {x: 0, y: 0}
   m_Animator: {fileID: 1445920720754508415}
+  characterModel: {fileID: 5312854771294438079}
   HandPos: {fileID: 5354835969154294230}
   grabbed: {fileID: 0}
   move:
@@ -2224,6 +2225,10 @@ PrefabInstance:
     - target: {fileID: 172005423717689597, guid: d613cbffce5b53f41be871231293b0e4, type: 3}
       propertyPath: m_Name
       value: Clerk
+      objectReference: {fileID: 0}
+    - target: {fileID: 172005423717689597, guid: d613cbffce5b53f41be871231293b0e4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 659995775074464327, guid: d613cbffce5b53f41be871231293b0e4, type: 3}
       propertyPath: m_RootOrder

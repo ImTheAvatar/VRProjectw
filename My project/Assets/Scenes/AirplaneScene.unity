@@ -1446,7 +1446,7 @@ MonoBehaviour:
   grabbed:
   - {fileID: 176332363}
   FollowObj: {fileID: 0}
-  offset: {x: 0, y: 0, z: 0}
+  offset: {x: 4, y: 0, z: 0}
 --- !u!4 &201177841
 Transform:
   m_ObjectHideFlags: 0
@@ -1630,7 +1630,7 @@ MonoBehaviour:
   grabbed:
   - {fileID: 122752235}
   FollowObj: {fileID: 0}
-  offset: {x: 0, y: 0, z: 0}
+  offset: {x: 4, y: 0, z: 0}
 --- !u!4 &332620528
 Transform:
   m_ObjectHideFlags: 0
@@ -3421,7 +3421,7 @@ MonoBehaviour:
   grabbed:
   - {fileID: 1196960542}
   FollowObj: {fileID: 0}
-  offset: {x: 0, y: 0, z: 0}
+  offset: {x: 4, y: 0, z: 0}
 --- !u!4 &1116339817
 Transform:
   m_ObjectHideFlags: 0
@@ -3430,7 +3430,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1116339813}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.07, y: 3.07, z: -23.2}
+  m_LocalPosition: {x: 3.07, y: 3.4, z: -23.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3552,7 +3552,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   recorder: {fileID: 200257479}
-  IsVR: 0
+  IsVR: 1
 --- !u!4 &1181434753
 Transform:
   m_ObjectHideFlags: 0
@@ -4830,7 +4830,7 @@ MonoBehaviour:
   grabbed:
   - {fileID: 119990797}
   FollowObj: {fileID: 0}
-  offset: {x: 0, y: 0, z: 0}
+  offset: {x: 4, y: 0, z: 0}
 --- !u!4 &1853841599
 Transform:
   m_ObjectHideFlags: 0
@@ -9022,7 +9022,7 @@ MonoBehaviour:
   grabbed:
   - {fileID: 704415139}
   FollowObj: {fileID: 0}
-  offset: {x: 0, y: 0, z: 0}
+  offset: {x: 4, y: 0, z: 0}
 --- !u!23 &6084047641989164816
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10353,7 +10353,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9008908461468135169}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.22, y: 2.86, z: -15.81}
+  m_LocalPosition: {x: 2.91, y: 3.09, z: -15.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
