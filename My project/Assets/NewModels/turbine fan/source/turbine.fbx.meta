@@ -3,7 +3,32 @@ guid: e4da54e565c999741a86284e4fa9a24f
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: grid
+    second: {fileID: 2100000, guid: 1135b0c9296be4b44b7a88fb73b57e5a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: hull
+    second: {fileID: 2100000, guid: 98f7d027fddcc0645b5b52ba8d83888c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: metal_brighter
+    second: {fileID: 2100000, guid: 4bea111714055a34d9e6861204eb99d8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: metal_darker
+    second: {fileID: 2100000, guid: 206553a589d962b49ae28b72bb00d871, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: metal_scratched
+    second: {fileID: 2100000, guid: 842436020d730d348abb3a046fb7061e, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
