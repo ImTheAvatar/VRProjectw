@@ -50,6 +50,7 @@ public class PlayerNetwork : NetworkBehaviour
             {
                 characterModel.SetActive(false);
                 move.AddOnChangeListener(OnMoving, RHand.handType);
+                rotate.AddOnChangeListener(OnRotating, LHand.handType);
                 grabTrigger.AddOnChangeListener(OnGrabTrigger, LHand.handType);
                 disassembleTrigger.AddOnChangeListener(OnDisTrigger, LHand.handType);
                 moveOffsetUp.AddOnAxisListener(OnOffsetUp, RHand.handType);
@@ -100,6 +101,11 @@ public class PlayerNetwork : NetworkBehaviour
         movementDirection.y = 0f;
         player.transform.position += movementDirection * Time.deltaTime*walkSpeed;
         isMoving = true;
+    }
+    private void OnRotating(SteamVR_Action_Vector2 fromAction, SteamVR_Input_Sources fromSource, Vector2 axis, Vector2 delta)
+    {
+        Debug.Log(axis);
+        player.transform.rotation = Quaternion.Euler( new Vector3(0,axis.x,0) * Time.deltaTime * 100 + transform.rotation.eulerAngles);
     }
 
     private void Update()
@@ -171,14 +177,7 @@ public class PlayerNetwork : NetworkBehaviour
                 if (go.CompareTag("Grab"))
                 {
                     var grabObj = go.transform.parent.GetComponent<ParentHandler>();
-                    if (InputManager.Instance.IsVR)
-                    {
-                        grabObj.FollowObj = LHand.transform;
-                    }
-                    else
-                    {
-                        grabObj.FollowObj = HandPos;
-                    }
+                    grabObj.FollowObj = HandPos;
                     grabbed = grabObj;
                 }
             }

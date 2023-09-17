@@ -9,6 +9,7 @@ public class ParentHandler : NetworkBehaviour
     public List<GrabableObjBehaviour> grabbed;
     public Transform FollowObj;
     public Vector3 offset;
+    public PlayerNetwork Player;
     private void Awake()
     {
     }
@@ -25,7 +26,7 @@ public class ParentHandler : NetworkBehaviour
     {
         if(FollowObj != null)
         {
-            transform.position= FollowObj.position+offset;
+            transform.position = FollowObj.position+offset;
         }
     }
     public void Attach()

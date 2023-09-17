@@ -1446,7 +1446,8 @@ MonoBehaviour:
   grabbed:
   - {fileID: 176332363}
   FollowObj: {fileID: 0}
-  offset: {x: 4, y: 0, z: 0}
+  offset: {x: 0, y: 0, z: 0}
+  Player: {fileID: 0}
 --- !u!4 &201177841
 Transform:
   m_ObjectHideFlags: 0
@@ -1630,7 +1631,8 @@ MonoBehaviour:
   grabbed:
   - {fileID: 122752235}
   FollowObj: {fileID: 0}
-  offset: {x: 4, y: 0, z: 0}
+  offset: {x: 0, y: 0, z: 0}
+  Player: {fileID: 0}
 --- !u!4 &332620528
 Transform:
   m_ObjectHideFlags: 0
@@ -3421,7 +3423,8 @@ MonoBehaviour:
   grabbed:
   - {fileID: 1196960542}
   FollowObj: {fileID: 0}
-  offset: {x: 4, y: 0, z: 0}
+  offset: {x: 0, y: 0, z: 0}
+  Player: {fileID: 0}
 --- !u!4 &1116339817
 Transform:
   m_ObjectHideFlags: 0
@@ -3552,7 +3555,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   recorder: {fileID: 200257479}
-  IsVR: 1
+  IsVR: 0
 --- !u!4 &1181434753
 Transform:
   m_ObjectHideFlags: 0
@@ -4830,7 +4833,8 @@ MonoBehaviour:
   grabbed:
   - {fileID: 119990797}
   FollowObj: {fileID: 0}
-  offset: {x: 4, y: 0, z: 0}
+  offset: {x: 0, y: 0, z: 0}
+  Player: {fileID: 0}
 --- !u!4 &1853841599
 Transform:
   m_ObjectHideFlags: 0
@@ -9022,7 +9026,8 @@ MonoBehaviour:
   grabbed:
   - {fileID: 704415139}
   FollowObj: {fileID: 0}
-  offset: {x: 4, y: 0, z: 0}
+  offset: {x: 0, y: 0, z: 0}
+  Player: {fileID: 0}
 --- !u!23 &6084047641989164816
 MeshRenderer:
   m_ObjectHideFlags: 0
