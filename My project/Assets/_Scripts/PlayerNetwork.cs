@@ -14,7 +14,7 @@ public class PlayerNetwork : NetworkBehaviour
     [SerializeField] float walkSpeed = 10f;
     [SerializeField] Vector2 moveInput;
     [SerializeField] Animator m_Animator;
-    [SerializeField] GameObject characterModel;
+    [SerializeField] List<GameObject> characterModel;
     public static System.Action<PlayerNetwork> onLocalPlayerSpawned;
     public Transform HandPos;
     public bool HandFull => grabbed != null;
@@ -48,7 +48,10 @@ public class PlayerNetwork : NetworkBehaviour
             }
             else
             {
-                characterModel.SetActive(false);
+                foreach (var item in characterModel)
+                {
+                    item.SetActive(false);
+                }
                 move.AddOnChangeListener(OnMoving, RHand.handType);
                 rotate.AddOnChangeListener(OnRotating, LHand.handType);
                 grabTrigger.AddOnChangeListener(OnGrabTrigger, LHand.handType);
