@@ -3914,7 +3914,7 @@ MonoBehaviour:
   player: {fileID: 0}
   recorder: {fileID: 200257479}
   objectsLocalPosition: {fileID: 11400000, guid: 04ef7e504d583764796bfd26d5abfadd, type: 2}
-  IsVR: 1
+  IsVR: 0
 --- !u!4 &1181434753
 Transform:
   m_ObjectHideFlags: 0
