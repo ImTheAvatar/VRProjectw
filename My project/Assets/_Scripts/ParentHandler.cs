@@ -51,6 +51,11 @@ public class ParentHandler : NetworkBehaviour
                 }
             }
         }
+        foreach(var g in grabbed)
+        {
+            g.transform.localPosition = g.data.position;
+            g.transform.localRotation =Quaternion.Euler(g.data.rotation);
+        }
         Debug.Log("we have another " + grabbed.Count);
     }
 }

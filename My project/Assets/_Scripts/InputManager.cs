@@ -9,6 +9,7 @@ public class InputManager : Singleton<InputManager>
 {
     [SerializeField] PlayerNetwork player;
     [SerializeField] Recorder recorder;
+    public ObjectsLocalPosition objectsLocalPosition;
     public bool IsVR;
     private void Awake()
     {
